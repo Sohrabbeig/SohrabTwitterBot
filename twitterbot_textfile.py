@@ -30,4 +30,4 @@ for line in file_lines:
         print(e.reason)
 
     # Add sleep method to space tweets by 5 seconds each
-    sleep(5)
+    sleep(15)

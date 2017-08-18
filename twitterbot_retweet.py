@@ -1,16 +1,30 @@
 # consumer_key, consumer_secret, access_token and access_token_secret are stored here
 from keys import *
 import tweepy
+from time import sleep
+
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
-# For loop to iterate over tweets with #ocean, limit to 10
-for tweet in tweepy.Cursor(api.search, q='#sohrab').items(10):
+for tweet in tweepy.Cursor(api.search, q='#underscore62').items():
     try:
-        # Print out usernames of the last 10 people to use #ocean
-        print('Tweet by: @' + tweet.user.screen_name)
+        print('\nTweet by: @' + tweet.user.screen_name)
+
+        tweet.retweet()
+        print('Retweeted the tweet')
+
+        # Favorite the tweet
+        tweet.favorite()
+        print('Favorited the tweet')
+
+        if not tweet.user.following:
+            # Follow the user who tweeted
+            tweet.user.follow()
+            print('Followed the user')
+
+        sleep(5)
 
     except tweepy.TweepError as e:
         print(e.reason)
